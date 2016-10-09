@@ -13,7 +13,8 @@
        http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
        http://www.springframework.org/schema/cache 
        http://www.springframework.org/schema/cache/spring-cache.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
     <!-- 扫描Service包 -->
     <context:component-scan base-package="com.team.business.service.impl"/>     
     <!-- 配置事务管理器 -->
@@ -32,9 +33,9 @@
 	    </property>
      </bean>  
      
-     <aop:config>
-     	<aop:advisor advice-ref="methodTimeAdvice" pointcut="execution(* com.team.business.rest.controller..*.*(..))"/>
-     </aop:config>
+	<bean id="methodTimeAdvice" class="com.team.basic.interceptor.MethodActiveTimeInterceptor"/>
+	<aop:config>
+		<aop:advisor advice-ref="methodTimeAdvice" pointcut="execution(* com.team.business.rest.controller.*.*(..))"/>
+	</aop:config>
      
-      <bean id="methodTimeAdvice" class="com.team.basic.interceptor.MethodActiveTimeInterceptor"/>
 </beans>
