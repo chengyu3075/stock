@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/team/business/cache/redis/RedisService.java=UTF-8
+encoding//src/main/java/com/team/business/dao/UserDao.java=UTF-8
+encoding//src/main/java/com/team/business/service/UserOperationService.java=UTF-8
+encoding//src/test/java/com/team/test/annotations/RedisJava.java=UTF-8
+encoding/<project>=UTF-8
