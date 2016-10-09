@@ -18,7 +18,7 @@ public class MethodActiveTimeInterceptor implements MethodInterceptor {
 		watch.stop();
 		String methodName = arg0.getMethod().getName();
 		Long time = watch.getTime();
-		System.out.println("methodName:"+methodName+"timelong:"+time);
+		System.out.println("methodName:"+methodName+"***timelong:"+time);
 		if(methodTest.containsKey(methodName)) {
 		      Long[] x = methodTest.get(methodName);
 		      x[0]++;
