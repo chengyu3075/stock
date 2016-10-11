@@ -27,17 +27,19 @@ public class FrequencyHandlerInterceptor extends HandlerInterceptorAdapter {
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
-		Frequency methodFrequency = ((HandlerMethod) handler).getMethodAnnotation(Frequency.class);
-		Frequency classFrequency = ((HandlerMethod) handler).getBean().getClass().getAnnotation(Frequency.class);
-		
+		System.out.println("class is:"+handler.getClass());
 		boolean going = true;
-		if(classFrequency != null) {
-			going = handleFrequency(request, response, classFrequency);
-		}
-		
-		if(going && methodFrequency != null) {
-			going = handleFrequency(request, response, methodFrequency);
+		if(handler instanceof HandlerMethod){
+			Frequency methodFrequency = ((HandlerMethod) handler).getMethodAnnotation(Frequency.class);
+			Frequency classFrequency = ((HandlerMethod) handler).getBean().getClass().getAnnotation(Frequency.class);
+			
+			if(classFrequency != null) {
+				going = handleFrequency(request, response, classFrequency);
+			}
+			
+			if(going && methodFrequency != null) {
+				going = handleFrequency(request, response, methodFrequency);
+			}
 		}
 		return going;
 	}

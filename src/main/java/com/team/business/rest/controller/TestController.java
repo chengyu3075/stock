@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.business.service.TestService;
@@ -22,7 +23,9 @@ public class TestController {
 	private TestService testServcie2;
 	
 	@ResponseBody
-	@RequestMapping("first")
+	@RequestMapping(value = "first", method = RequestMethod.GET, produces = "application/json;charset=UTF-8", headers = {
+			"Accept=application/json",
+			"Content-Type=application/json;charset=utf-8" })
 	public String test1(){
 		testServcie1.test();
 		try {

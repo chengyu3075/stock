@@ -31,8 +31,12 @@
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->  
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  
 	<!-- 开启Shiro注解 -->
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>  
-  		<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+	 <!--  加上下面这一句是为了解决If the controller requires proxying (e.g. due to @Transactional), please use class-based proxying  的报错-->
+        <!-- 参考http://www.cnblogs.com/digdeep/p/4624998.html 会发现上面错误是 Spring AOP 不同配置方式产生的冲突问题 -->
+       <property name="proxyTargetClass" value="true"/> 
+	</bean>  
+  	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
   	  <property name="securityManager" ref="securityManager"/>  
     </bean>
         
