@@ -79,9 +79,7 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "{userName}/login", method = RequestMethod.GET, produces = "application/json;charset=UTF-8", headers = {
-			"Accept=application/json",
-			"Content-Type=application/json;charset=utf-8" })
+	@RequestMapping(value = "{userName}/login", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public TeamResult<User> login(HttpServletRequest request,@PathVariable("userName") String userName,String password){
 		Subject subject=SecurityUtils.getSubject();
 		UsernamePasswordToken token=new UsernamePasswordToken(userName, password);
