@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
         
             <!-- 自定义Realm-shiro配置 -->
-	<bean id="myRealm" class="com.team.basic.settings.TeamShiroRealm"/>  
+	<bean id="myRealm" class="com.team.basic.config.TeamShiroRealm"/>  
 	<!-- 安全管理器-shiro配置 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
   	  <property name="realm" ref="myRealm"/>  
@@ -23,6 +23,7 @@
 	        	/login=anon   
 	        	/regist=anon 
 	        	/test=anon 
+	        	/home=anon 
 	        	/team/* = authc
 	        </value>  
 	    </property>

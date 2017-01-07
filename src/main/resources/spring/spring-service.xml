@@ -37,5 +37,4 @@
 	<aop:config>
 		<aop:advisor advice-ref="methodTimeAdvice" pointcut="execution(* com.team.business.rest.controller.*.*(..))"/>
 	</aop:config>
-     
 </beans>
