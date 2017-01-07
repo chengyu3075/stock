@@ -54,7 +54,7 @@ public class UserWebController {
 			User user = (User) subject.getSession().getAttribute("user");
 			result = new TeamResult<User>(UserOperationEnum.LOGIN_SUCCESS.getStateCode(),
 					UserOperationEnum.LOGIN_SUCCESS.getStateInfo(), user); 
-			page = "redirect:business/home";
+			page = "/home";
 		} catch (UnknownAccountException e) {
 			//用户未注册
 			result = new TeamResult<User>(UserOperationEnum.LOGIN_NO_USER.getStateCode(),
@@ -72,5 +72,13 @@ public class UserWebController {
 			logger.info(e.getMessage(), e);
 		}  
 		return new ModelAndView(page,"result",result);
+	}
+	/**
+	 * 返回主页
+	 * @return
+	 */
+	@RequestMapping("/home")
+	public ModelAndView getHome(){
+		return new ModelAndView("/home");
 	}
 }
