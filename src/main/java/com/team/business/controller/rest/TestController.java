@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.team.business.service.TestService;
-import com.team.business.util.annonations.Frequency;
+import com.team.business.utils.annonations.Frequency;
 
 @Controller
 @Scope("prototype")
