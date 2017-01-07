@@ -74,11 +74,27 @@ public class UserWebController {
 		return new ModelAndView(page,"result",result);
 	}
 	/**
+	 * 获取登录页
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String getLoginPage(){
+		//TODO
+		return "login";
+	}
+	
+	/**
 	 * 返回主页
 	 * @return
 	 */
 	@RequestMapping("/home")
 	public ModelAndView getHome(){
+		//TODO
 		return new ModelAndView("/home");
 	}
+	
+	
+	
+	
+	
 }

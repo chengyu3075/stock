@@ -4,14 +4,13 @@ app.controller("login",function($scope,$http){
 	//登录
 	$scope.login = function(){
 		$http({
-			url:urls.web.user.path+$scope.username+urls.web.user.login,
+			url:urls.api.user.path+$scope.username+urls.api.user.login,
 			method:"get",
 			params:{'password':$scope.password} ,
-		    headers: {
-		        'Content-Type': 'application/json;charset=utf-8'
-		   }
-		}).success(function(){
-            console.log("success!");
+		}).success(function(response){
+			if(response.resultCode==20){
+				window.location.href=urls.web.home;
+			}
         }).error(function(){
             console.log("error");
         });
