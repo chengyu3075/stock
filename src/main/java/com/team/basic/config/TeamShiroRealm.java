@@ -14,13 +14,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.team.business.model.User;
-import com.team.business.service.UserOperationService;
+import com.team.business.model.TeamUser;
+import com.team.business.service.UserService;
 
 public class TeamShiroRealm extends AuthorizingRealm {
 	
 	@Autowired
-	private UserOperationService userService;
+	private UserService userService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
@@ -31,8 +31,8 @@ public class TeamShiroRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken arg0) throws AuthenticationException {
-		String userName = (String)arg0.getPrincipal();
-		User user = userService.login(userName);
+		Long cellPhone = (Long)arg0.getPrincipal();
+		TeamUser user = userService.login(cellPhone);
 		SimpleAuthenticationInfo authortication = null;
 		try {
 			//用户未注册异常
@@ -40,7 +40,7 @@ public class TeamShiroRealm extends AuthorizingRealm {
 				throw new UnknownAccountException();
 			}
 			authortication = new SimpleAuthenticationInfo(user.getUserName(),
-					user.getPassword(),user.getNickName()==null?"":user.getNickName());
+					user.getPassword(),"");
 			//保存用户信息
 			Subject currentUser = SecurityUtils.getSubject(); 
 			Session session = currentUser.getSession();

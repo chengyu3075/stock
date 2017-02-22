@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<%@include file = "basic/css_src.jsp" %>
 	<%@include file = "basic/js_src.jsp" %>
 	
-	<script src="js/angularjs/login.js"></script>
+	<script src="js/angularjs/user.js"></script>
   </head>
   <body ng-app="Login">
 	<div class="container"  ng-controller="login">
@@ -47,12 +47,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							 </div>
 							 <div  class="row">
 								 <div class="col-xs-4 col-xs-offset-4">
-									 <br/><input type="password" ng-model="password" class="form-control" placeholder="密码" required/>
+									 <br/>
+									 <input type="password" ng-model="password" class="form-control" placeholder="密码" required/>
 								 </div>
 							 </div>
 							 <div class="row">
-								 <div class="col-xs-4 col-xs-offset-4">
+								 <div class="col-xs-3 col-xs-offset-4">
 									 <label class="checkbox" style="margin-left:20px"><input type="checkbox" />记住我</label> 
+								 </div>
+								<div class="col-xs-4">
+									<a href="web/user/regist/page" target="_self">我要注册</a>
 								 </div>
 							 </div>
 							  <div class="row">

@@ -2,7 +2,7 @@ package com.team.business.dao;
 
 import java.util.Date;
 
-import com.team.business.model.User;
+import com.team.business.model.TeamUser;
 
 public interface UserDao {
 	/**
@@ -11,7 +11,7 @@ public interface UserDao {
 	 * @return
 	 * @throws Exception
 	 */
-	User getUser(String userName) throws Exception;
+	TeamUser getUser(Long userPhone) throws Exception;
 	/**
 	 * 保存用户详细信息
 	 * @param user
@@ -19,7 +19,7 @@ public interface UserDao {
 	 * @return
 	 * @throws Exception
 	 */
-	int saveUser(User user) throws Exception;
+	int saveUser(TeamUser user) throws Exception;
 	/**
 	 * 保存用户登录时间
 	 * @param userName

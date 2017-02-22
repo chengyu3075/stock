@@ -5,6 +5,7 @@ var urls = {
 			user:{
 				path:"/team/web/user/",
 				login:"/login",
+				regist:"/regist/page"
 			},
 			home:"/team/web/user/home"
 		},
@@ -13,6 +14,8 @@ var urls = {
 			user:{
 				path:"/team/user/",
 				login:"/login",
+				regist:"user/regist",
+				indentifyCode:"user/indentifyCode",
 			},
 		}
 };

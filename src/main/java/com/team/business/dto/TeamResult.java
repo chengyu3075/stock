@@ -2,6 +2,8 @@ package com.team.business.dto;
 
 import java.io.Serializable;
 
+import com.team.business.enums.OperationEnum;
+
 public class TeamResult<T> implements Serializable {
 
 	private int resultCode;      //结果编码
@@ -17,6 +19,11 @@ public class TeamResult<T> implements Serializable {
 	
 	public TeamResult(){
 		
+	}
+	
+	public TeamResult(OperationEnum operationInfo){
+		this.resultCode = operationInfo.getStateCode();
+		this.resultInfo = operationInfo.getStateInfo();
 	}
 	
 	public int getResultCode() {

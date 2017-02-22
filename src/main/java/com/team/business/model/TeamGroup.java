@@ -2,7 +2,7 @@ package com.team.business.model;
 
 import java.util.Date;
 
-public class Group {
+public class TeamGroup {
 	private String id;                 //团体id
 	private String name;               //团体名称
 	private String creatorId;          //创建者id

@@ -1,6 +1,6 @@
 package com.team.business.dao;
 
-import com.team.business.model.Group;
+import com.team.business.model.TeamGroup;
 
 public interface GroupDao {
 	/**
@@ -9,5 +9,5 @@ public interface GroupDao {
 	 * @return
 	 * @throws Exception
 	 */
-	int saveGroup(Group group) throws Exception;
+	int saveGroup(TeamGroup group) throws Exception;
 }

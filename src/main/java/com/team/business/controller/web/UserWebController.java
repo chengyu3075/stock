@@ -12,18 +12,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.team.business.dto.TeamResult;
-import com.team.business.enums.UserOperationEnum;
-import com.team.business.model.User;
-import com.team.business.service.UserOperationService;
+import com.team.business.enums.OperationEnum;
+import com.team.business.model.TeamUser;
+import com.team.business.service.UserService;
 
 @Controller
 @Scope("prototype")
@@ -31,7 +30,7 @@ import com.team.business.service.UserOperationService;
 public class UserWebController {
 	
 	@Autowired
-	private UserOperationService userOperationService;
+	private UserService userOperationService;
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -46,32 +45,38 @@ public class UserWebController {
 	public ModelAndView login(HttpServletRequest request,@PathVariable("userName") String userName,@RequestParam(value="password",required=true) String password){
 		Subject subject=SecurityUtils.getSubject();
 		UsernamePasswordToken token=new UsernamePasswordToken(userName, password);
-		TeamResult<User> result = null;
+		TeamResult<TeamUser> result = null;
 		String page = "";
 		try {
 			subject.login(token);
-			userOperationService.saveLoginTime(userName);
-			User user = (User) subject.getSession().getAttribute("user");
-			result = new TeamResult<User>(UserOperationEnum.LOGIN_SUCCESS.getStateCode(),
-					UserOperationEnum.LOGIN_SUCCESS.getStateInfo(), user); 
+			TeamUser user = (TeamUser) subject.getSession().getAttribute("user");
+			result = new TeamResult<TeamUser>(OperationEnum.LOGIN_SUCCESS.getStateCode(),
+					OperationEnum.LOGIN_SUCCESS.getStateInfo(), user); 
 			page = "/home";
 		} catch (UnknownAccountException e) {
 			//用户未注册
-			result = new TeamResult<User>(UserOperationEnum.LOGIN_NO_USER.getStateCode(),
-					UserOperationEnum.LOGIN_NO_USER.getStateInfo(), null);
+			result = new TeamResult<TeamUser>(OperationEnum.LOGIN_NO_USER.getStateCode(),
+					OperationEnum.LOGIN_NO_USER.getStateInfo(), null);
 			logger.info(e.getMessage(), e);
 		}catch (IncorrectCredentialsException e) {
 			//用户名密码错误
-			result = new TeamResult<User>(UserOperationEnum.LOGIN_USERNAME_PASSWORD_ERROR.getStateCode(),
-					UserOperationEnum.LOGIN_USERNAME_PASSWORD_ERROR.getStateInfo(), null); 
+			result = new TeamResult<TeamUser>(OperationEnum.LOGIN_USERNAME_PASSWORD_ERROR.getStateCode(),
+					OperationEnum.LOGIN_USERNAME_PASSWORD_ERROR.getStateInfo(), null); 
 			logger.info(e.getMessage(), e);
 		}catch (Exception e) {
 			//用户名密码错误
-			result = new TeamResult<User>(UserOperationEnum.SYSTEM_ERROR.getStateCode(),
-					UserOperationEnum.SYSTEM_ERROR.getStateInfo(), null); 
+			result = new TeamResult<TeamUser>(OperationEnum.SYSTEM_ERROR.getStateCode(),
+					OperationEnum.SYSTEM_ERROR.getStateInfo(), null); 
 			logger.info(e.getMessage(), e);
 		}  
 		return new ModelAndView(page,"result",result);
+	}
+	
+	@RequestMapping(value = "{userName}/regist", method = RequestMethod.GET)
+	public ModelAndView regist(String identifyCode,TeamUser user){
+		
+	
+		return null;
 	}
 	/**
 	 * 获取登录页
@@ -80,6 +85,7 @@ public class UserWebController {
 	@RequestMapping("/login")
 	public String getLoginPage(){
 		//TODO
+		
 		return "login";
 	}
 	
@@ -93,7 +99,15 @@ public class UserWebController {
 		return new ModelAndView("/home");
 	}
 	
-	
+	/**
+	 * 获取注册页面
+	 * @return
+	 */
+	@RequestMapping("/regist/page")
+	public ModelAndView getRegist(){
+		
+		return new ModelAndView("/regist");
+	}
 	
 	
 	
