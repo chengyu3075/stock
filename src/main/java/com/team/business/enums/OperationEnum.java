@@ -3,6 +3,7 @@ package com.team.business.enums;
 public enum OperationEnum {
 	REGIST_SUCCESS(10,"注册成功"),
 	REGIST_USERNAME_USED(11,"用户已注册"),
+	REGIST_PHONE_USED(15,"手机号已被占用"),
 	IDENTIFIER_CODE_ERROR(12,"验证码错误"),
 	IDENTIFIER_CODE_EXPIRED(13,"验证码已过期"),
 	

@@ -12,7 +12,6 @@ public class TeamUser implements Serializable {
 	private String        userId;        //用户id
 	@Length(max=16, min=1,message="{user.name}") 
 	private String        userName;      //用户账号
-	@Password
 	private String        password;      //用户密码
 	@Phone
 	private Long          userPhone;     //用户手机  

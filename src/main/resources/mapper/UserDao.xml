@@ -3,12 +3,20 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.business.dao.UserDao">
-<select id="getUser" resultType="TeamUser">
-				
+
+<select id="queryUserByPhone" resultType="TeamUser">
+		select * from team_user where user_phone = #{userPhone}
+</select>
+
+<select id="queryUserByUserName" resultType="TeamUser">
+		select * from team_user where user_name = #{userName}
 </select>
 
 <insert id="saveUser" parameterType="TeamUser">
-	
+			insert into team_user 
+			(user_id,user_name,password,user_phone,create_time)
+   		 values 
+    		(#{userId},#{userName},#{password},#{userPhone},now())
 </insert>
 
 <update id="saveLoginTime" parameterType="String">

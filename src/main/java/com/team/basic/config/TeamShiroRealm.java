@@ -31,7 +31,8 @@ public class TeamShiroRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken arg0) throws AuthenticationException {
-		Long cellPhone = (Long)arg0.getPrincipal();
+		System.out.println(arg0.getPrincipal());
+		Long cellPhone = Long.valueOf((String)arg0.getPrincipal());
 		TeamUser user = userService.login(cellPhone);
 		SimpleAuthenticationInfo authortication = null;
 		try {

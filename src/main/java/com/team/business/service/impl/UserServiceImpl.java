@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	@CacheEvict
 	public TeamUser login(Long cellPhone){
 		try {
-			return userDao.getUser(cellPhone);
+			return userDao.queryUserByPhone(cellPhone);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -44,8 +44,12 @@ public class UserServiceImpl implements UserService {
 	public int regist(TeamUser user) throws UserExistException,SystemErrorException,Exception{
 		int result = 0;
 		//用户已被注册
-		if(userDao.getUser(user.getUserPhone()) !=null){
-			throw new UserExistException(OperationEnum.REGIST_USERNAME_USED.getStateInfo());
+		if(userDao.queryUserByPhone(user.getUserPhone()) !=null){
+			throw new UserExistException(15,OperationEnum.REGIST_PHONE_USED.getStateInfo());
+		}
+		//用户名已被占用
+		if(userDao.queryUserByUserName(user.getUserName()) !=null){
+			throw new UserExistException(11,OperationEnum.REGIST_USERNAME_USED.getStateInfo());
 		}
 		//验证码错误
 		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));

@@ -76,10 +76,10 @@ public class UserController {
 			return new TeamResult<TeamUser>(OperationEnum.IDENTIFIER_CODE_ERROR);
 		//验证码是否有效
 		for(String[] strArray:indentifyList){
-			if(indentyCode.equals(strArray[0])){
+			if(indentyCode.equals(strArray[1])){
 				long now = System.currentTimeMillis();
-				long createTime = Long.valueOf(strArray[1]);
-				if(user.getUserPhone().equals(strArray[3])){
+				long createTime = Long.valueOf(strArray[0]);
+				if(user.getUserPhone().equals(Long.valueOf(strArray[2]))){
 					flag = true;
 					if(now-createTime>1000*60*5){
 						return new TeamResult<TeamUser>(OperationEnum.IDENTIFIER_CODE_EXPIRED);
@@ -97,7 +97,7 @@ public class UserController {
 			result = new TeamResult<TeamUser>(OperationEnum.REGIST_SUCCESS.getStateCode(),
 					OperationEnum.REGIST_SUCCESS.getStateInfo(), null); 
 		}catch (UserExistException e1){
-			result = new TeamResult<TeamUser>(OperationEnum.REGIST_USERNAME_USED.getStateCode(),
+			result = new TeamResult<TeamUser>(e1.getCode(),
 					e1.getMessage(), null); 
 		}catch (IndentiferExpiredException e2){
 			result = new TeamResult<TeamUser>(OperationEnum.IDENTIFIER_CODE_EXPIRED.getStateCode(),
@@ -122,10 +122,10 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "{userName}/login", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	public TeamResult<TeamUser> login(HttpServletRequest request,@PathVariable("userName") String userName,String password){
+	@RequestMapping(value = "{userPhone}/login", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public TeamResult<TeamUser> login(HttpServletRequest request,@PathVariable("userPhone") String userPhone,String password){
 		Subject subject=SecurityUtils.getSubject();
-		UsernamePasswordToken token=new UsernamePasswordToken(userName, password);
+		UsernamePasswordToken token=new UsernamePasswordToken(userPhone, password);
 		TeamResult<TeamUser> result = null;
 		try {
 			subject.login(token);
@@ -156,14 +156,13 @@ public class UserController {
 	 * @param userName
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "{userName}/logout", method = RequestMethod.POST, produces = "application/json;charset=UTF-8", headers = {
-			"Accept=application/json",
-			"Content-Type=application/json;charset=utf-8" })
-	public TeamResult<TeamUser> logout(HttpServletRequest request, @PathVariable String userName){
-		
-		
-		return null;
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+		Subject subject = SecurityUtils.getSubject();
+		if (subject.isAuthenticated()){
+			subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+		}
+		return "home";
 	}
 	/**
 	 * 生成4位数字验证码

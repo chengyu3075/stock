@@ -82,7 +82,7 @@ public class UserWebController {
 	 * 获取登录页
 	 * @return
 	 */
-	@RequestMapping("/login")
+	@RequestMapping("/login/page")
 	public String getLoginPage(){
 		//TODO
 		

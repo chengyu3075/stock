@@ -11,7 +11,14 @@ public interface UserDao {
 	 * @return
 	 * @throws Exception
 	 */
-	TeamUser getUser(Long userPhone) throws Exception;
+	TeamUser queryUserByPhone(Long userPhone) throws Exception;
+	/**
+	 * 根据用户名取得用户
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
+	TeamUser queryUserByUserName(String userName) throws Exception;
 	/**
 	 * 保存用户详细信息
 	 * @param user

@@ -18,7 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script src="js/util/jquery.md5.js"></script>
 	
 	 <style type="text/css">
-		body {background-color: #FFF5EE}
 		span {font-size: 10px}
 	</style>
 
@@ -42,30 +41,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					 <div class="row">
 							<form class="form-horizontal" name="registForm" ng-submit="regist()" novalidate>
 							  <div class="form-group">
-							    <label for="username" class="col-sm-2 col-sm-offset-2 control-label">用户名</label>
+							    <label for="username" class="col-sm-2 col-sm-offset-2 control-label">用户名:</label>
 							    <div class="col-sm-4">
-							        <input type="text" class="form-control" id="username" name="username" ng-model="username"  placeholder="用户名(6-24数字字母)"
-							        ng-pattern="/^[A-Za-z0-9]{6,24}$/" required>
+							        <input type="text" class="form-control" id="username" ng-keyup="user.usernameUsed=false" name="username" ng-model="username"  placeholder="用户名(6-24数字字母)"
+							        ng-pattern="/^[A-Za-z0-9]{6,16}$/" required>
 								    <span style="color:red " ng-show="registForm.username.$invalid && submitted">
 										请输入正确的用户名
 									 </span>
+									<span style="color:red" ng-show="user.usernameUsed">
+										用户名已被占用
+								  	</span>
 							    </div>
 							  </div>
 							  <div class="form-group">
-							    <label for="cellphone" class="col-sm-2 col-sm-offset-2 control-label">手&nbsp;&nbsp;&nbsp;机:</label>
+							    <label for="cellphone" class="col-sm-2 col-sm-offset-2 control-label">手&nbsp;&nbsp;&nbsp;&nbsp;机:</label>
 							    <div class="col-sm-4">
-							      <input type="text" class="form-control" name="cellphone" id="cellphone" ng-model="cellphpne" placeholder="手机号码"
+							      <input type="text" class="form-control" ng-keyup="user.phoneUsed=false"  name="cellphone" id="cellphone" ng-model="cellphpne" placeholder="手机号码"
 							     	 ng-pattern="/(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/" required>
 							      <span style="color:red" ng-show="registForm.cellphone.$invalid && submitted">
 										<span ng-show="registForm.cellphone.$invalid && submitted">请输入正确的手机号码</span>
 								  </span>
+								 <span style="color:red" ng-show="user.phoneUsed">
+										手机号已被占用
+								  </span>
 							    </div>
 							  </div>
 							  <div class="form-group">
-							    <label for="password" class="col-sm-2 col-sm-offset-2 control-label">密&nbsp;&nbsp;&nbsp;码:</label>
+							    <label for="password" class="col-sm-2 col-sm-offset-2 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
 							    <div class="col-sm-4">
 							      <input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="8~20位字母、数字或字符，至少包含两种"
-							     	 ng-pattern="/(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%\^&*?]+$ /" required>
+							     	 ng-pattern="/^[A-Za-z0-9]{6,16}$/" required>
 							      <span style="color:red" ng-show="registForm.password.$invalid && submitted">
 										<span ng-show="registForm.password.$invalid">密码过于简单</span>
 								  </span>
@@ -74,13 +79,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							  <div class="form-group">
 							    <label for="indentyCode" class="col-sm-2 col-sm-offset-2 control-label">验证码:</label>
 							    <div class="col-sm-2">
-							      <input type="text" class="form-control" id="indentyCode" name="indentyCode" ng-model="indentyCode" placeholder="手机验证码" required>
+							      <input type="text" ng-keyup="user.indentifyError=false,user.indentifyTimeout=false" class="form-control" id="indentyCode" name="indentyCode" ng-model="indentyCode" placeholder="手机验证码" required>
 							      <span style="color:red" ng-show="registForm.indentyCode.$invalid ">
 										<span ng-show="registForm.indentyCode.$error.required && submitted">验证码不能为空</span>
 								  </span>
+								  <span style="color:red" ng-show="user.indentifyError">
+										验证码错误
+								  </span>
+								 <span style="color:red" ng-show="user.indentifyTimeout">
+										验证码已过期
+								  </span>
 							    </div>
 							    <div class="col-sm-2">
-							    	<button type="button" ng-click="countDown($event)" class="btn btn-info">{{time}}</button>
+							    	<button type="button" ng-click="getIndentifyCode($event)" class="btn btn-info">{{time}}</button>
 							  	</div>
 							  </div>
 							  <div class="form-group">
